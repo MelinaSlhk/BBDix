@@ -199,3 +199,9 @@ where nb_huttes = (select max(nb_huttes) from village);
 
 --30. Noms des habitants ayant pris plus de trophées qu'Obélix (3 lignes).
 
+select h.nom from habitant h
+inner join trophee t on t.num_preneur = h.num_hab
+group by h.nom
+having count(t.num_trophee) > (select count(*) from habitant h2
+inner join trophee t2 on t2.num_preneur = h2.num_hab
+where h2.nom = 'Obélix');
